@@ -16,16 +16,17 @@
     <script src="https://d.line-scdn.net/liff/1.0/sdk.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>   
     <script>
-        liff.init(
-            data => {
-                const userId = data.context.userId;
-            },
-            err => {
-        }
-        );
-        liff.openWindow({
-            url:'https://snst-lab.github.io/linebot-handwriting-input/public/canvas',
-            external:false
+        const canvas = document.querySelector('#canvas');
+        const signaturePad = new SignaturePad(canvas, {
+            backgroundColor: 'rgb(238,238,238)',
+        });
+    
+        $(window).on('load', function(){
+            canvas.setAttribute('width', $('.container').width());
+            canvas.setAttribute('height', window.innerHeight - $('#btn').outerHeight() - 10);
+            signaturePad.clear();
+            liff.init(function (data) {});
+
         });
     </script>
 </body>
