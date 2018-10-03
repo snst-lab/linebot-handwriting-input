@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>文字を手書きしてください</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, height=device-height">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+</head>
+<body>
+    <div class="container">
+        <canvas id="canvas"></canvas>
+        <button id="btn" type="button" class="btn btn-primary btn-block">Share</button>
+    </div>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
+    <script src="https://d.line-scdn.net/liff/1.0/sdk.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>   
+    <script>
+        const canvas = document.querySelector('#canvas');
+        const signaturePad = new SignaturePad(canvas, {
+            backgroundColor: 'rgb(238,238,238)',
+        });
+    
+        $(window).on('load', function(){
+            canvas.setAttribute('width', $('.container').width());
+            canvas.setAttribute('height', window.innerHeight - $('#btn').outerHeight() - 10);
+            signaturePad.clear();
+            liff.init(function (data) {});
+
+        });
+    </script>
+</body>
+</html>
