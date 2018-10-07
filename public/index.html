@@ -22,15 +22,15 @@
     <script>
         window.onload = function(){
             new HandwritingInput();
+          
+            $('#showResult').on('click',function(){
+                 if(window.RESULT !== undefined && window.RESULT !== ""){
+                     location.href = "https://linebot-handwriting-input.glitch.me/result?" + window.RESULT;
+                 }else{
+                     cAlert('候補が見つかりませんでした');
+                 }
+            });
         }
-        
-        $('#showResult').on('click',function(){
-             if(window.RESULT !== undefined && window.RESULT !== ""){
-                 location.href = "https://linebot-handwriting-input.glitch.me/result?" + window.RESULT;
-             }else{
-                 cAlert('候補が見つかりませんでした');
-             }
-        });
       
         const HandwritingInput = function(){
               const fileLoaded = function(success) {
