@@ -1,32 +1,79 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>文字を手書きしてください</title>
+    <title>漢字を手書きしてください</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
-    <!-- <meta name="apple-mobile-web-app-capable" content="yes" /> -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div class="container">
-        <canvas id="canvas"></canvas>
-        <button id="btn" type="button" class="btn btn-primary btn-block">Share</button>
+    <div class="centering" style="position:fixed;">
+        <div class="drawingBoard loading"><span>Loading...</span></div>
+        <div>
+          <button id="undo" class="btn">戻る</button>
+          <button id="clear" class="btn">消去</button>
+          <button id="showResult" class="btn">候補表示</button>
+        </div>
     </div>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
-    <script src="https://d.line-scdn.net/liff/1.0/sdk.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>   
+    <script type="text/javascript" src="lib/hanzilookup.min.js"></script>
+    <script type="text/javascript" src="js/util.js"></script>
     <script>
-        const canvas = document.querySelector('#canvas');
-        const signaturePad = new SignaturePad(canvas, {
-            backgroundColor: 'rgb(238,238,238)',
+        window.onload = function(){
+            new HandwritingInput();
+        }
+        
+        $('#showResult').on('click',function(){
+             if(window.RESULT !== undefined && window.RESULT !== ""){
+                 location.href = "https://linebot-handwriting-input.glitch.me/result?" + window.RESULT;
+             }else{
+                 cAlert('候補が見つかりませんでした');
+             }
         });
-    
-        $(window).on('load', function(){
-            canvas.setAttribute('width', $('.container').width());
-            canvas.setAttribute('height', window.innerHeight - $('#btn').outerHeight() - 10);
-            signaturePad.clear();
-            liff.init(function (data) {});
-        });
+      
+        const HandwritingInput = function(){
+              const fileLoaded = function(success) {
+                  if (!success) {
+                    _filesToLoad = -1;
+                    $(".drawingBoard span").text("Failed to load data.");
+                    return;
+                  }
+                  --_filesToLoad;
+                  if (_filesToLoad != 0) return;
+                  $(".drawingBoard").removeClass("loading");
+                  _drawingBoard = HanziLookup.DrawingBoard($(".drawingBoard").first(), lookup);
+                  $("#undo").on('click',function (evt) {
+                      _drawingBoard.undoStroke();
+                      _drawingBoard.redraw();
+                      lookup();
+                  });
+                  $("#clear").on('click',function (evt) {
+                      _drawingBoard.clearCanvas();
+                      _drawingBoard.redraw();
+                      window.RESULT = '';
+                  });
+              }
+
+              const lookup = function() {
+                  const analyzedChar = new HanziLookup.AnalyzedCharacter(_drawingBoard.cloneStrokes());
+                  const matcherOrig = new HanziLookup.Matcher("model");
+                  matcherOrig.match(analyzedChar, 12, function(matches) {
+                      showResults(matches);
+                  });
+              }
+
+              const showResults = function(matches) {
+                  window.RESULT = '';
+                  for (var i = 0; i != matches.length; ++i) {
+                     window.RESULT += matches[i].character;
+                  }
+              }
+              
+              var _filesToLoad = 1;
+              var _drawingBoard;
+              HanziLookup.init("model", "lib/model.json", fileLoaded);
+        }
     </script>
 </body>
 </html>

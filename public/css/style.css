@@ -1,0 +1,101 @@
+
+body,html{
+    margin:0;
+    padding:0;
+  }
+  
+  .drawingBoard {
+    height: 100%;
+    cursor: crosshair;
+    clear: both; 
+    overflow: hidden; 
+    background-color: #f0f0f0; 
+  
+  }
+  
+  .drawingBoard span {
+    display: none;
+  }
+  
+  .drawingBoard.loading { 
+    background-color: #f0f0f0; 
+  }
+  
+  .drawingBoard.loading span { 
+    display: inline; color: #606060;
+  }
+  
+  .centering{
+    display:flex;
+    -webkit-box-lines:multiple;
+    -moz-box-lines:multiple;
+    -webkit-flex-wrap:wrap;
+    -moz-flex-wrap:wrap;
+    -ms-flex-wrap:wrap;
+    flex-wrap:wrap;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .btn{
+      display: block;
+      text-decoration: none;
+      min-height:2rem;
+      min-width: 5rem;
+      width: auto;
+      font-family: 'Roboto', sans-serif;
+      font-size: small;
+      font-weight: 300;
+      line-height: 2.5rem;
+      text-align: center;
+      margin:1.5rem auto;
+      color: #ffffff;
+      border:none;
+      background: royalblue;
+      list-style-type: none;
+      outline: none;
+      border-radius:0.3rem;
+      -webkit-transition: 0.3s;
+      -moz-transition: 0.3s;
+      -o-transition: 0.3s;
+      -ms-transition: 0.3s;
+      transition: 0.3s;
+      box-shadow: 0 0.3rem 0.3rem rgba(0,0,0,0.3); 
+  }
+  
+  .btn:hover{
+      background: #ffffff;
+      color: royalblue;
+      border:solid 1px royalblue;
+      box-shadow: none;
+  }
+  
+  #resultContainer{
+    position:fixed;
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  
+  .results{
+      font-family: 'Roboto', sans-serif;
+      font-size:2rem;
+      width:3rem;
+      height:3rem;
+      color: #555555;
+      text-align:center;
+      line-height:3rem;
+      vertical-align: middle;
+      margin:1rem 1rem;
+      border:solid 1px #eeeeee;
+      border-radius:0.3rem;
+      -webkit-transition: 0.3s;
+      -moz-transition: 0.3s;
+      -o-transition: 0.3s;
+      -ms-transition: 0.3s;
+      transition: 0.3s;
+  }
+  
+  .results:hover{
+      background: darkturquoise;
+  }

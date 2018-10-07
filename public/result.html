@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>候補一覧</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="resultContainer"></div>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="js/util.js"></script>
+    <script>
+        window.onload = function(){
+            const query = decodeURIComponent(location.search.substring(1).replace("result?",""));
+            const result = query.split("");
+            console.log(result);
+            for(var i=0; i< result.length;i++){
+                $("#resultContainer").append("<div class='results'>"+result[i]+"</div>");
+            }
+
+            $(".results").each(function(){
+                $(this).on("click",function(event){
+                    event.preventDefault();
+                    document.getSelection().selectAllChildren(this);
+                    document.execCommand('copy');
+                    cAlert('クリップボードにコピーしました');
+                });
+            });
+        }
+  </script>
+</body>
+</html>

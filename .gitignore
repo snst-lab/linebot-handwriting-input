@@ -1,3 +1,5 @@
-add-liff.sh
+/resource/*
+/archive/*
+liff-regist.sh
 deploy.bat
 fix.bat
