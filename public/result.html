@@ -15,7 +15,6 @@
         window.onload = function(){
             const query = decodeURIComponent(location.search.substring(1).replace("result?",""));
             const result = query.split("");
-            console.log(result);
             for(var i=0; i< result.length;i++){
                 $("#resultContainer").append("<div class='results'>"+result[i]+"</div>");
             }
