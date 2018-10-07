@@ -12,7 +12,7 @@
     "dependencies": {
       "express": "^4.16.3",
       "nedb": "^1.8.0",
-      "linebot": "^1.4.1",
+      "linebot": "^1.4.1"
     },
     "engines": {
       "node": "8.x"
